@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-deployment
+spec:
+  selector:
+    matchLabels:
+      app: user
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: user
+    spec:
+      containers:
+        - name: user
+          image: harbor.linux.com/istio/user
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user
+  ports:
+    - name: user-port
+      protocol: TCP
+      port: 8080
+      nodePort: 30001
+      targetPort: 8080
+  type: NodePort
+        

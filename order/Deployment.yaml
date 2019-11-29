@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment
+spec:
+  selector:
+    matchLabels:
+      app: order
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+        - name: order
+          image: harbor.linux.com/istio/order
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+spec:
+  selector:
+    app: order
+  ports:
+    - name: order-port
+      protocol: TCP
+      port: 8080
+      nodePort: 30002
+      targetPort: 8080
+  type: NodePort
+        
