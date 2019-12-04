@@ -20,7 +20,7 @@ public class UserController {
     @GetMapping(value="/getUser")
     public String getUser() {
         String result = "congratulation！";
-        String postfix = "/getOrder?userId=liaojian";
+        String postfix = "/orders/getOrder?userId=liaojian";
         try {
             result += restTemplate.getForEntity(remoteURL + postfix, String.class).getBody();
         } catch (Exception e) {
